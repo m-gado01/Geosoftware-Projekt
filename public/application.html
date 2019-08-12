@@ -6,10 +6,11 @@
   <meta name="author" content="Max Gadomski">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>HOME</title>
-  <link rel="stylesheet" href='stylesheets/home.css'>
+  <title>APPLICATION</title>
+  <link rel="stylesheet" href='stylesheets/application.css'>
   <link rel="stylesheet" href='stylesheets/header.css'>
   <link rel="stylesheet" href='stylesheets/footer.css'>
+  <link rel="stylesheet" href='leaflet/leaflet.css'>
 </head>
 
 <body>
@@ -18,11 +19,15 @@
     <a href='application' class="active">Application</a>
     <hr>
   </header>
+  <div id="map"></div>
   <footer>
     <hr>
     <p>© 2019 Christin Bösch - Max Gadomski - Constantin Rulle</p>
     <a href='impressum'>Impressum</a>
   </footer>
+  <script src='leaflet/leaflet.js'></script>
+  <script src='private/tokens.js'></script>
+  <script src='javascripts/application.js'></script>
 </body>
 
 </html>

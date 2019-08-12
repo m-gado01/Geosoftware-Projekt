@@ -2,3 +2,11 @@ body {
   font-family: 'Courier New', Courier, monospace;
   background-color: #2B292E;
 }
+
+#map {
+  width: 70%;
+  height: 80vh;
+  position: absolute;
+  right: 1%;
+  top: 10%;
+}

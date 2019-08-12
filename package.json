@@ -9,6 +9,8 @@
     "cookie-parser": "^1.4.4",
     "debug": "^4.1.1",
     "express": "^4.17.1",
+    "leaflet": "^1.5.1",
+    "leaflet-routing-machine": "^3.2.12",
     "mongodb": "^3.3.0-beta2",
     "morgan": "^1.9.1"
   }

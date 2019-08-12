@@ -1,0 +1,19 @@
+footer {
+    background-color: #2B292E;
+    position: absolute;
+    left: 1%;
+    right: 1%;
+    padding: 1%;
+    bottom: 0;
+    color: white;
+}
+
+hr {
+    width: 100%;
+}
+
+p {
+    font-size: 2vh;
+    position: absolute;
+    right: 1%;
+}

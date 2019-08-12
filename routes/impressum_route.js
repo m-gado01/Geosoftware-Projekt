@@ -3,8 +3,8 @@ const path = require('path');
 
 const router = express.Router();
 
-router.get('/page2', function (req, res) {
-    res.sendFile(path.join(__dirname, '../public', 'page2.html'));
+router.get('/impressum', function (req, res) {
+    res.sendFile(path.join(__dirname, '../public', 'impressum.html'));
 });
 
 module.exports = router;
