@@ -16,7 +16,7 @@ const app = express();
 //app.use(express.urlencoded({ extended: false }));
 //app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public/")));
-app.use("/private", express.static(path.join(__dirname, "/private")))
+app.use("/data", express.static(path.join(__dirname, "/data")))
 app.use("/leaflet", express.static(path.join(__dirname, "/node_modules/leaflet/dist")));
 app.use("/leaflet-routing-machine", express.static(path.join(__dirname, "/node_modules/leaflet-routing-machine/dist")));
 
@@ -49,7 +49,7 @@ async function connectDatabase() {
 };
 
 async function initializeDatabase() {
-    const exampleRoutes = require('./private/data/exampleRoutes.js');
+    const exampleRoutes = require('./data/exampleRoutes.js');
 
     mongoose.connection.once("open", async (error) => {
         if (error) console.log(error);
