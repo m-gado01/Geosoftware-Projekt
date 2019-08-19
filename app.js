@@ -1,3 +1,4 @@
+const bodyparser = require('body-parser');
 const express = require('express');
 const path = require('path');
 //const mongodb = require('mongodb');
@@ -23,6 +24,9 @@ app.use("/leaflet-routing-machine", express.static(path.join(__dirname, "/node_m
 app.use(homeRouter);
 app.use(applicationRouter);
 app.use(impressumRouter);
+
+//app.use(bodyparser.json());
+//app.use(bodyparser.urlencoded({ extended: true }));
 
 connectDatabase();
 initializeDatabase();
@@ -71,7 +75,7 @@ async function initializeDatabase() {
                 type: String,
                 required: true
             },
-            date: {
+            timestamp: {
                 type: Date,
                 required: true
             },
@@ -83,13 +87,13 @@ async function initializeDatabase() {
             location: linestringSchema
         });
 
-        var Route = mongoose.model("Route", routeSchema);
+        let RouteModel = mongoose.model("Route", routeSchema);
 
-        //await Route.deleteMany({});
+        //await RouteModel.deleteMany({});
 
         const route_1 = {
             user: "Max Mustermann",
-            date: "2019-08-12",
+            timestamp: "2019-08-12",
             type: "tracked",
             location: {
                 type: "LineString",
@@ -99,7 +103,7 @@ async function initializeDatabase() {
 
         const route_2 = {
             user: "Martina Mustermann",
-            date: "2019-08-12",
+            timestamp: "2019-08-12",
             type: "tracked",
             location: {
                 type: "LineString",
@@ -107,27 +111,27 @@ async function initializeDatabase() {
             }
         };
 
-        await Route.findOne({ user: route_1.user, date: route_1.date, type: route_1.type }, (error, route) => {
+        await RouteModel.findOne({ user: route_1.user, timestamp: route_1.timestamp, type: route_1.type }, (error, route) => {
             if (error) console.log(error);
             if (route) console.log("WARNING: Route already exists!");
-            else Route.create(route_1)
+            else RouteModel.create(route_1)
                 .catch(error => console.log(error));
         });
 
-        await Route.findOne({ user: route_2.user, date: route_2.date, type: route_2.type }, (error, route) => {
+        await RouteModel.findOne({ user: route_2.user, timestamp: route_2.timestamp, type: route_2.type }, (error, route) => {
             if (error) console.log(error);
             if (route) console.log("WARNING: Route already exists!");
-            else Route.create(route_2)
+            else RouteModel.create(route_2)
                 .catch(error => console.log(error));
         });
 
-        Route.find({}).exec((error, routes) => {
-            if (error) console.log(error);
-            else routes.forEach((route) => {
-                console.log(route.user);
-                console.log(route.date);
-                console.log(route.type);
-            });
+        app.get('/application/getRoutes', async (request, response) => {
+            try {
+                var result = await RouteModel.find().exec();
+                response.json(result);
+            } catch (error) {
+                console.log(error);
+            }
         });
     });
 };

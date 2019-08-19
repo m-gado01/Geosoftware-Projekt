@@ -10,3 +10,36 @@ body {
   right: 1%;
   top: 11%;
 }
+
+#controls {
+  width: 27%;
+  height: 80vh;
+  position: absolute;
+  left: 1%;
+  top: 11%;
+  text-align: center;
+}
+
+#btn_data {
+  margin: auto;
+}
+
+#data {
+  width: 90%;
+  height: 70vh;
+  margin: auto;
+  margin-top: 5%;
+  color: white;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td, th, tr {
+  border: 1px solid white;
+  text-align: left;
+  padding: 8px;
+}

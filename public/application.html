@@ -19,6 +19,19 @@
     <a href='application' class="active">Application</a>
     <hr>
   </header>
+  <div id="controls">
+    <input id="btn_data" type="button" value="Get routes" onclick="getRoutesFromDB()">
+    <div id="data">
+      <h3>Routes</h3>
+      <table id="routes">
+        <tr>
+          <th>User</th>
+          <th>Timestamp</th>
+          <th>Type</th>
+        </tr>
+      </table>
+    </div>
+  </div>
   <div id="map"></div>
   <footer>
     <hr>
