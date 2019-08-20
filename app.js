@@ -19,8 +19,9 @@ app.use(express.static(path.join(__dirname, 'public/')));
 app.use('/data', express.static(path.join(__dirname, '/data')))
 app.use('/leaflet', express.static(path.join(__dirname, '/node_modules/leaflet/dist')));
 app.use('/leaflet-routing-machine', express.static(path.join(__dirname, '/node_modules/leaflet-routing-machine/dist')));
-app.use("/jquery", express.static(path.join(__dirname, "/node_modules/jquery/dist")));
-app.use("/bootstrap", express.static(path.join(__dirname, "/node_modules/bootstrap/dist")));
+app.use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
+app.use('/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist')));
+app.use('/randomcolor', express.static(path.join(__dirname, '/node_modules/randomcolor')));
 
 app.use(homeRouter);
 app.use(applicationRouter);
