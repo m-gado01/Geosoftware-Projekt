@@ -3,8 +3,8 @@ const path = require('path');
 
 const router = express.Router();
 
-router.get('/impressum', function (req, res) {
-    res.sendFile(path.join(__dirname, '../public', 'impressum.html'));
+router.get('/imprint', function (req, res) {
+    res.sendFile(path.join(__dirname, '../public', 'imprint.html'));
 });
 
 module.exports = router;

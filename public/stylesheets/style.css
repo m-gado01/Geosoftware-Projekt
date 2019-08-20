@@ -92,3 +92,15 @@ a:hover {
   top: 11%;
   overflow: auto;
 }
+
+#index1 {
+  background-color: #2B292E;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+text {
+  color: white;
+}

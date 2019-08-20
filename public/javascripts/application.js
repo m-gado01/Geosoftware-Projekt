@@ -17,8 +17,8 @@ async function getRoutesFromDB() {
             const routes = xhr.response;
             routes.forEach((route) => {
                 var table = document.getElementById("routes");
-                var index = table.rows.length;
-                var row = table.insertRow(index);
+                var rowIndex = table.rows.length;
+                var row = table.insertRow(rowIndex);
                 row.insertCell(0).innerHTML = route.user;
                 row.insertCell(1).innerHTML = route.timestamp;
                 row.insertCell(2).innerHTML = route.type;
@@ -28,8 +28,8 @@ async function getRoutesFromDB() {
                 for (i = 0; i < checkboxes.length; i++) {
                     checkboxes[i].addEventListener("click", function () {
                         if (this.checked) {
-                            console.log(this.parentElement.parentElement.rowIndex);
-
+                            var dataIndex = this.parentElement.parentElement.rowIndex - 1;
+                            console.log(routes[dataIndex]);
                         } else {
                         }
                     });
