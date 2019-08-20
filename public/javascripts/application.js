@@ -29,8 +29,26 @@ async function getRoutesFromDB() {
                     checkboxes[i].addEventListener("click", function () {
                         if (this.checked) {
                             var dataIndex = this.parentElement.parentElement.rowIndex - 1;
-                            console.log(routes[dataIndex]);
-                        } else {
+
+                            var route_geojson = {
+                                "type": "Feature",
+                                "id": dataIndex,
+                                "geometry": {
+                                    "type": "LineString",
+                                    "coordinates": routes[dataIndex].location.coordinates
+                                },
+                                "properties": {
+                                    "id": dataIndex
+                                }
+                            };
+
+                            var line = L.geoJSON(route_geojson, {
+                                style: {
+                                    color: "blue"
+                                }
+                            }).addTo(map);
+
+                            map.fitBounds(line.getBounds());
                         }
                     });
                 };
