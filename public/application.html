@@ -19,18 +19,16 @@
   </div>
   <div id="main">
     <div id="sidebar">
-      <div id="controls">
-        <span id="databutton" title="get data from database"><i class="fa fa-database fa-2x"></i></span>
-        <div id="data">
-          <h3>Routes</h3>
-          <table id="routes">
-            <tr>
-              <th>User</th>
-              <th>Timestamp</th>
-              <th>Type</th>
-            </tr>
-          </table>
-        </div>
+      <div id="interface">
+        <h3>Routes</h3>
+        <table id="table">
+          <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Type</th>
+          </tr>
+        </table>
       </div>
     </div>
     <div id="map"></div>
@@ -40,9 +38,10 @@
     <a class="footerlinks" href='imprint'>Imprint</a>
   </div>
   <script src='leaflet/leaflet.js'></script>
-  <script src='data/tokens.js'></script>
-  <script src='javascripts/colorGenerator.js'></script>
   <script src='fontawesome/js/all.js'></script>
+  <script src='data/tokens.js'></script>
+  <script src='javascripts/map.js'></script>
+  <script src='javascripts/colorGenerator.js'></script>
   <script src='javascripts/application.js'></script>
 </body>
 
