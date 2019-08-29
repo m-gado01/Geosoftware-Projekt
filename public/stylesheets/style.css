@@ -1,56 +1,10 @@
 body {
-    font-family: 'Courier New', Courier, monospace;
-    background-color: #2B292E;
-}
-
-footer {
-    background-color: #2B292E;
-    position: fixed;
-    left: 1%;
-    right: 1%;
-    padding: 1%;
-    bottom: 0;
-    color: white;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #2B292E;
 }
 
 hr {
-    width: 100%;
-}
-
-p {
-    font-size: 2vh;
-    position: absolute;
-    right: 1%;
-}
-
-#map {
-  width: 70%;
-  height: 80vh;
-  position: absolute;
-  right: 1%;
-  top: 11%;
-}
-
-#controls {
-  width: 27%;
-  height: 80vh;
-  position: absolute;
-  left: 1%;
-  top: 11%;
-  text-align: center;
-}
-
-#btn_data {
-  margin: auto;
-}
-
-#data {
-  width: 90%;
-  height: 70vh;
-  margin: auto;
-  margin-top: 5%;
-  color: white;
-  overflow: auto;
+  width: 99%;
 }
 
 table {
@@ -64,23 +18,110 @@ td, th, tr {
   padding: 8px;
 }
 
-header {
-  background-color: #2B292E;
-  top: 0;
-  right: 1%;
-  left: 1%;
-  font-size: 4vh;
-  padding: 1%;
+.headerlinks {
+  font-size: 150%;
+  color: white;;
+  text-decoration-line: none;
+  padding: 0 2% 0 2%;
 }
 
-a {
-    color: white;;
-    text-decoration-line: none;
-    padding: 2%;
-}
-
-a:hover {
+.headerlinks:hover {
   text-decoration-line: underline;
+}
+
+.footerlinks {
+  font-size: 100%;
+  color: white;;
+  text-decoration-line: none;
+  padding: 0 2% 0 2%;
+}
+
+.footerlinks:hover {
+  text-decoration-line: underline;
+}
+
+.zoom {
+  cursor: pointer;
+  pointer-events: none;
+  color: grey;
+}
+
+.unvisible {
+  cursor: pointer;
+  color: red
+}
+
+.visible {
+  cursor: pointer;
+  color: green;
+}
+
+#header {
+  width: 99%;
+  height: 7%;
+  position: fixed;
+  top: 1%;
+}
+
+#main {
+  width: 99%;
+  height: 82%;
+  position: fixed;
+  top: 9%;
+}
+
+#footer {
+  width: 99%;
+  height: 7%;
+  position: fixed;
+  bottom: 1%;
+}
+
+#sidebar {
+  height: 82%;
+  width: 1%;
+  position: fixed;
+  left: 0;
+  background-color:white;
+  opacity: 0.5;
+  z-index: 1;
+  transition: 0.2s;
+}
+
+#sidebar:hover {
+  opacity: 0.8;
+  width: 50%;
+  background-color: #2B292E;
+}
+
+#map {
+  width: 95%;
+  height: 100%;
+  margin: auto;
+  z-index: 0;
+}
+
+#controls {
+  width: 50%;
+  height: 80%;
+  text-align: center;
+  visibility: hidden;
+}
+
+#databutton {
+  color: white;
+}
+
+#databutton:hover {
+  cursor: pointer;
+}
+
+#data {
+  width: 90%;
+  height: 70vh;
+  margin: auto;
+  margin-top: 5%;
+  color: white;
 }
 
 #imprint {
@@ -96,8 +137,4 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-text {
-  color: white;
 }

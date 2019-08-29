@@ -22,6 +22,7 @@ app.use('/leaflet-routing-machine', express.static(path.join(__dirname, '/node_m
 app.use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
 app.use('/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist')));
 app.use('/randomcolor', express.static(path.join(__dirname, '/node_modules/randomcolor')));
+app.use('/fontawesome', express.static(path.join(__dirname, '/node_modules/@fortawesome/fontawesome-free')));
 
 app.use(homeRouter);
 app.use(applicationRouter);

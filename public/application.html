@@ -7,38 +7,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>APPLICATION</title>
-  <link rel="stylesheet" href='stylesheets/style.css'>
   <link rel="stylesheet" href='leaflet/leaflet.css'>
+  <link rel="stylesheet" href='stylesheets/style.css'>
 </head>
 
 <body>
-  <header>
-    <a href='home'>Home</a>
-    <a href='application' class="active">Application</a>
+  <div id="header">
+    <a class="headerlinks" href='home'>Home</a>
+    <a class="headerlinks active" href='application'>Application</a>
     <hr>
-  </header>
-  <div id="controls">
-    <input id="btn_data" type="button" value="Get routes" onclick="getRoutesFromDB()">
-    <div id="data">
-      <h3>Routes</h3>
-      <table id="routes">
-        <tr>
-          <th>User</th>
-          <th>Timestamp</th>
-          <th>Type</th>
-        </tr>
-      </table>
-    </div>
   </div>
-  <div id="map"></div>
-  <footer>
+  <div id="main">
+    <div id="sidebar">
+      <div id="controls">
+        <span id="databutton" title="get data from database"><i class="fa fa-database fa-2x"></i></span>
+        <div id="data">
+          <h3>Routes</h3>
+          <table id="routes">
+            <tr>
+              <th>User</th>
+              <th>Timestamp</th>
+              <th>Type</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="map"></div>
+  </div>
+  <div id="footer">
     <hr>
-    <p>© 2019 Christin Bösch - Max Gadomski - Constantin Rulle</p>
-    <a href='imprint'>Imprint</a>
-  </footer>
+    <a class="footerlinks" href='imprint'>Imprint</a>
+  </div>
   <script src='leaflet/leaflet.js'></script>
   <script src='data/tokens.js'></script>
   <script src='javascripts/colorGenerator.js'></script>
+  <script src='fontawesome/js/all.js'></script>
   <script src='javascripts/application.js'></script>
 </body>
 
