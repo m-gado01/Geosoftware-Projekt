@@ -5,9 +5,7 @@ const mongoose = require('mongoose');
 //var cookieParser = require('cookie-parser');
 //var logger = require('morgan');
 
-const homeRouter = require('./routes/home_route');
-const applicationRouter = require('./routes/application_route');
-const impressumRouter = require('./routes/imprint_route');
+const router = require('./routes/router.js');
 
 const app = express();
 
@@ -24,9 +22,7 @@ app.use('/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstr
 app.use('/randomcolor', express.static(path.join(__dirname, '/node_modules/randomcolor')));
 app.use('/fontawesome', express.static(path.join(__dirname, '/node_modules/@fortawesome/fontawesome-free')));
 
-app.use(homeRouter);
-app.use(applicationRouter);
-app.use(impressumRouter);
+app.use(router);
 
 connectDatabase();
 initializeDatabase();

@@ -111,7 +111,7 @@ td, th, tr {
   text-align: left;
 }
 
-#imprint {
+/* #imprint {
   background-color: #2B292E;
   padding: 40px;
   color: rgb(194, 189, 189);
@@ -124,4 +124,4 @@ td, th, tr {
   display: flex;
   align-items: center;
   justify-content: center;
-}
+} */
