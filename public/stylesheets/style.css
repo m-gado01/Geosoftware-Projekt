@@ -16,22 +16,26 @@ td, th, tr {
   font-size: 150%;
   color: white;;
   text-decoration-line: none;
+  -moz-text-decoration-line: none;
   padding: 0 2% 0 2%;
 }
 
 .headerlinks:hover {
   text-decoration-line: underline;
+  -moz-text-decoration-line: underline;
 }
 
 .footerlinks {
   font-size: 100%;
   color: white;;
   text-decoration-line: none;
+  -moz-text-decoration-line: none;
   padding: 0 2% 0 2%;
 }
 
 .footerlinks:hover {
   text-decoration-line: underline;
+  -moz-text-decoration-line: underline;
 }
 
 .zoom {
@@ -91,8 +95,61 @@ td, th, tr {
 #map {
   width: 95%;
   height: 100%;
+  position: sticky;
   margin: auto;
   z-index: 0;
+}
+
+.slidercontainer {
+  width: 50%;
+  height: 5%;
+  position: fixed;
+  top: 10%;
+  left: 30%;
+  z-index: 1000;
+}
+
+.slider {
+  appearance: none;
+  -webkit-appearance: none;
+  -ms-progress-appearance: none;
+  -moz-appearance: none;
+  width: 90%;
+  height: 20%;
+  background-color: #2B292E;
+  opacity: 0.5;
+  border-radius: 1000px;
+}
+
+.slider:hover {
+  opacity: 0.7;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 5%;
+  height: 25px;
+  background-color: orange;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  appearance: none;
+  -moz-appearance: none;
+  width: 5%;
+  height: 25px;
+  background-color: orange;
+  cursor: pointer;
+}
+
+.slider::-ms-thumb {
+  appearance: none;
+  -ms-progress-appearance: none;
+  width: 5%;
+  height: 25px;
+  background-color: orange;
+  cursor: pointer;
 }
 
 #interface {
