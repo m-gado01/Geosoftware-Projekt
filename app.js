@@ -21,6 +21,7 @@ app.use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dis
 app.use('/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist')));
 app.use('/randomcolor', express.static(path.join(__dirname, '/node_modules/randomcolor')));
 app.use('/fontawesome', express.static(path.join(__dirname, '/node_modules/@fortawesome/fontawesome-free')));
+app.use('/geojson-utils', express.static(path.join(__dirname, 'node_modules/geojson-utils')));
 
 app.use(router);
 
@@ -107,6 +108,16 @@ async function initializeDatabase() {
             }
         };
 
+        const route_3 = {
+            user: "Lasse Reinström",
+            timestamp: "2019-12-24",
+            type: "planned",
+            location: {
+                type: "LineString",
+                coordinates: exampleRoutes.r3.features[0].geometry.coordinates
+            }
+        };
+
         await RouteModel.findOne({ user: route_1.user, timestamp: route_1.timestamp, type: route_1.type }, (error, route) => {
             if (error) console.log(error);
             if (route) console.log("WARNING: Route already exists!");
@@ -118,6 +129,13 @@ async function initializeDatabase() {
             if (error) console.log(error);
             if (route) console.log("WARNING: Route already exists!");
             else RouteModel.create(route_2)
+                .catch(error => console.log(error));
+        });
+
+        await RouteModel.findOne({ user: route_3.user, timestamp: route_3.timestamp, type: route_3.type }, (error, route) => {
+            if (error) console.log(error);
+            if (route) console.log("WARNING: Route already exists!");
+            else RouteModel.create(route_3)
                 .catch(error => console.log(error));
         });
 

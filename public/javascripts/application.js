@@ -1,13 +1,45 @@
-
 main();
-/* weather(); */
 
 async function main() {
-    await initSidebar();
-    await getData();
+    await getRoutes();
 };
 
-function initSidebar() {
+async function getRoutes() {
+    const xhr = new XMLHttpRequest();
+    const url = 'http://localhost:3000/application/getRoutes';
+    xhr.responseType = "json";
+    xhr.open("GET", url);
+    xhr.send();
+    xhr.onreadystatechange = (() => {
+        if (xhr.readyState == 4) {
+            getAnimalData(xhr.response);
+        }
+    });
+};
+
+async function getAnimalData(routes) {
+    /* const xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    const url = 'https://www.movebank.org/movebank/service/direct-read?entity_type=event&study_id=657674643&individual_id=662388728&attributes=all';
+    await xhr.open("GET", url, true);
+    await xhr.send();
+    xhr.onreadystatechange = await (async (e) => {
+        if (xhr.readyState == 4) {
+            console.log(xhr.response);
+        }
+    }); */
+
+    testfunction(routes, movebank);
+};
+
+async function testfunction(routes, animaldata) {
+    initInterface(routes);
+    var routes_linestrings = routesToLineStrings(routes);
+    var routes_layers = geoJSONsToLayers(routes_linestrings);
+    activateInterface(routes_layers, prepareAnimalData(animaldata));
+};
+
+async function initInterface(routes) {
     var sidebar = document.getElementById("sidebar");
     var interface = document.getElementById("interface");
 
@@ -18,24 +50,7 @@ function initSidebar() {
     sidebar.addEventListener("mouseleave", () => {
         interface.setAttribute("style", "visibility: hidden");
     });
-};
 
-async function getData() {
-    const xhr = new XMLHttpRequest();
-    const url = 'http://localhost:3000/application/getRoutes';
-    xhr.responseType = "json";
-    await xhr.open("GET", url);
-    await xhr.send();
-    xhr.onreadystatechange = await (async (e) => {
-        if (xhr.readyState == 4) {
-            await initInterface(xhr.response);
-        }
-    });
-};
-
-async function initInterface(routes) {
-    var allLayers = [];
-    var allMarkers = [];
     routes.forEach((route) => {
         var table = document.getElementById("table");
         var rowIndex = table.rows.length;
@@ -48,100 +63,158 @@ async function initInterface(routes) {
         row.insertCell(3).innerHTML = route.type;
         row.insertCell(4).innerHTML = '<span title="set visibility of this layer" class="hidden"><i class="fa fa-eye-slash"></i></span>';
         row.insertCell(5).innerHTML = '<span title="zoom to layer" class="zoom"><i class="fa fa-crosshairs"></i></span>';
-
-        var dataIndex = rowIndex - 1;
-        var lnglat = routes[dataIndex].location.coordinates;
-
-        var route_geojson = {
-            "type": "Feature",
-            "id": dataIndex,
-            "geometry": {
-                "type": "LineString",
-                "coordinates": lnglat
-            },
-            "properties": {
-                "id": dataIndex
-            }
-        };
-
-        var line = L.geoJSON(route_geojson, {
-            style: {
-                color: generateColor(),
-                weight: 4,
-                opacity: 0.7
-            }
-        });
-
-        allLayers[dataIndex] = line;
     });
+};
 
-    var visibleButtons = document.getElementsByClassName("hidden");
-    var zoomButtons = document.getElementsByClassName("zoom");
-    var layerGroup = L.layerGroup();
+function activateInterface(routeLayer, animaldata) {
+    var visibilityButtons = Array.from(document.getElementsByClassName("hidden"));
+    var zoomButtons = Array.from(document.getElementsByClassName("zoom"));
+    var slider = document.getElementById("slider");
+    var featureGroup_routes = L.featureGroup().addTo(map);
+    var featureGroup_marker = L.featureGroup().addTo(map);
+    var featureGroup_animals = L.featureGroup().addTo(map);
 
-    for (i = 0; i < visibleButtons.length; i++) {
-        visibleButtons[i].addEventListener("click", function () {
+    visibilityButtons.forEach((vbutton) => {
+        vbutton.addEventListener("click", function () {
             var layerIndex = this.parentElement.parentElement.rowIndex - 1;
             if (this.className == "hidden") {
-                layerGroup.addLayer(allLayers[layerIndex]);
+                featureGroup_routes.addLayer(routeLayer[layerIndex]);
                 this.innerHTML = '<i class="fas fa-eye"></i>';
                 zoomButtons[layerIndex].setAttribute("style", "pointer-events: all; color: white");
                 this.className = "visible";
             } else {
-                layerGroup.removeLayer(allLayers[layerIndex]);
+                featureGroup_routes.removeLayer(routeLayer[layerIndex]);
                 this.innerHTML = '<i class="fas fa-eye-slash"></i>';
                 zoomButtons[layerIndex].setAttribute("style", "pointer-events: none; color: grey");
                 this.className = "hidden";
-            }
-            layerGroup.addTo(map);
+                featureGroup_marker.clearLayers();
+            };
         });
-        zoomButtons[i].addEventListener("click", function () {
+    });
+
+    zoomButtons.forEach((zbutton) => {
+        zbutton.addEventListener("click", function () {
             var layerIndex = this.parentElement.parentElement.rowIndex - 1;
-            map.fitBounds(allLayers[layerIndex].getBounds());
+            map.fitBounds(routeLayer[layerIndex].getBounds());
         });
-    };
+    });
 
-    for (var j = 0; j < allLayers.length; j++) {
-        allLayers[j].addEventListener("click", function (e) {
-            layerGroup.eachLayer(function (layer) {
-                layer.setStyle({ weight: 4, opacity: 0.7 });
+    featureGroup_routes.addEventListener("click", async function (e) {
+        featureGroup_routes.eachLayer((feature) => {
+            feature.setStyle(defaultStyle);
+        });
+
+        featureGroup_marker.clearLayers();
+
+        e.layer.setStyle(clickedStyle);
+
+        console.log(e.layer);
+
+        var marker = L.circleMarker(e.layer._latlngs[0], { color: e.layer.options.color, radius: 15 });
+        featureGroup_marker.addLayer(marker);
+
+        slider.setAttribute("max", e.layer._latlngs.length - 1);
+
+        slider.addEventListener("mousemove", function () {
+            marker.setLatLng(e.layer._latlngs[slider.value]);
+        });
+
+        /* var intersects = await lineStringsIntersect(animaldata, e.layer.feature.geometry);
+
+        intersects.features.forEach((point) => {
+            var latlng = switchCoordinates(point.geometry.coordinates);
+
+            var gooseIcon = L.icon({
+                iconUrl: 'images/goose.png',
+                iconSize: [40, 50],
             });
 
-            var t = e.target;
+            featureGroup_animals.addLayer(L.marker(latlng));
+        }); */
+    });
+};
+function routesToLineStrings(routes) {
+    var result = [];
+    routes.forEach((route) => {
+        var linestring = {
+            "type": "LineString",
+            "coordinates": route.location.coordinates
+        };
+        result.push(linestring);
+    });
+    return result;
+};
 
-            layerGroup.getLayer(t._leaflet_id).setStyle({ weight: 5, opacity: 1 });
-
-            var latlng = t._layers[t._leaflet_id - 1]._latlngs;
-
-            var marker = L.circleMarker(latlng[0], { color: t.options.style.color, radius: 15 });
-            layerGroup.addLayer(marker);
-
-            var slider = document.getElementById("slider");
-            slider.setAttribute("max", latlng.length - 1);
-
-            slider.addEventListener("mousemove", function () {
-                marker.setLatLng(latlng[slider.value]);
-            });
-
-            console.log(latlng[0]);
+function geoJSONsToLayers(geojsons) {
+    var result = [];
+    geojsons.forEach((geojson) => {
+        var layer = L.geoJSON(geojson, {
+            style: defaultStyle
         });
+        layer.setStyle({ color: generateColor() });
+        result.push(layer);
+    });
+    return result;
+};
+
+function prepareAnimalData(data) {
+    var lnglats = [];
+    var locations = data.individuals[0].locations;
+    locations.forEach((location) => {
+        var point = [location.location_long, location.location_lat];
+        lnglats.push(point);
+    });
+    return {
+        "type": "LineString",
+        "coordinates": lnglats
     };
 };
 
-/* async function movebank() {
-    const xhr = new XMLHttpRequest();
-    const url = 'http://movebank.org/movebank/service/public/json?&study_id=458996285';
-    xhr.responseType = "json";
-    await xhr.open("GET", url);
-    await xhr.send();
-    xhr.onreadystatechange = await (async (e) => {
-        if (xhr.readyState == 4) {
-            console.log(xhr.response);
-        }
-    });
-}; */
+function switchCoordinates(coordinates) {
+    var result = [];
+    var lng = coordinates[0];
+    var lat = coordinates[1];
+    result.push(lat);
+    result.push(lng);
+    return result;
+};
 
-/* async function weather() {
+async function lineStringsIntersect(l1, l2) {
+    var intersects = [];
+    for (var i = 0; i <= l1.coordinates.length - 2; ++i) {
+        for (var j = 0; j <= l2.coordinates.length - 2; ++j) {
+            var a1Latlon = L.latLng(l1.coordinates[i][1], l1.coordinates[i][0]),
+                a2Latlon = L.latLng(l1.coordinates[i + 1][1], l1.coordinates[i + 1][0]),
+                b1Latlon = L.latLng(l2.coordinates[j][1], l2.coordinates[j][0]),
+                b2Latlon = L.latLng(l2.coordinates[j + 1][1], l2.coordinates[j + 1][0]),
+                a1 = L.Projection.SphericalMercator.project(a1Latlon),
+                a2 = L.Projection.SphericalMercator.project(a2Latlon),
+                b1 = L.Projection.SphericalMercator.project(b1Latlon),
+                b2 = L.Projection.SphericalMercator.project(b2Latlon),
+                ua_t = (b2.x - b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x),
+                ub_t = (a2.x - a1.x) * (a1.y - b1.y) - (a2.y - a1.y) * (a1.x - b1.x),
+                u_b = (b2.y - b1.y) * (a2.x - a1.x) - (b2.x - b1.x) * (a2.y - a1.y);
+            if (u_b != 0) {
+                var ua = ua_t / u_b,
+                    ub = ub_t / u_b;
+                if (0 <= ua && ua <= 1 && 0 <= ub && ub <= 1) {
+                    var pt_x = a1.x + ua * (a2.x - a1.x),
+                        pt_y = a1.y + ua * (a2.y - a1.y),
+                        pt_xy = { "x": pt_x, "y": pt_y },
+                        pt_latlon = L.Projection.SphericalMercator.unproject(pt_xy);
+                    intersects.push({
+                        'type': 'Point',
+                        'coordinates': [pt_latlon.lng, pt_latlon.lat]
+                    });
+                }
+            }
+        }
+    }
+    if (intersects.length == 0) intersects = false;
+    return intersects;
+};
+
+/* async function getWeatherData(routes, animaldata) {
     var latlng = { lat: 51.95626, lng: 7.59265 };
     const xhr = new XMLHttpRequest();
     const url = 'https://api.airvisual.com/v2/nearest_city?lat=' + latlng.lat + '&lon=' + latlng.lng + '&key=b18b2fad-3505-4b05-b8b6-522f94e7b0f6';
@@ -155,15 +228,12 @@ async function initInterface(routes) {
     });
 }; */
 
-/* function convertCoordinates(coordinates) {
-    var result = [];
-    coordinates.forEach((coordinate) => {
-        var lng = coordinate[0];
-        var lat = coordinate[1];
-        var array = [];
-        array.push(lat);
-        array.push(lng);
-        result.push(array);
-    });
-    return result;
-}; */
+var defaultStyle = {
+    weight: 4,
+    opacity: 0.7
+};
+
+var clickedStyle = {
+    weight: 5,
+    opacity: 1
+};
