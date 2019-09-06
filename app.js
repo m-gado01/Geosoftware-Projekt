@@ -21,7 +21,7 @@ app.use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dis
 app.use('/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist')));
 app.use('/randomcolor', express.static(path.join(__dirname, '/node_modules/randomcolor')));
 app.use('/fontawesome', express.static(path.join(__dirname, '/node_modules/@fortawesome/fontawesome-free')));
-app.use('/geojson-utils', express.static(path.join(__dirname, 'node_modules/geojson-utils')));
+app.use('/turf', express.static(path.join(__dirname, 'node_modules/@turf/turf')));
 
 app.use(router);
 

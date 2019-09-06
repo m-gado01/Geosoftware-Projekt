@@ -1,10 +1,10 @@
 main();
 
-async function main() {
-    await getRoutes();
+function main() {
+    getRoutes();
 };
 
-async function getRoutes() {
+function getRoutes() {
     const xhr = new XMLHttpRequest();
     const url = 'http://localhost:3000/application/getRoutes';
     xhr.responseType = "json";
@@ -17,7 +17,7 @@ async function getRoutes() {
     });
 };
 
-async function getAnimalData(routes) {
+function getAnimalData(routes) {
     /* const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     const url = 'https://www.movebank.org/movebank/service/direct-read?entity_type=event&study_id=657674643&individual_id=662388728&attributes=all';
@@ -32,14 +32,14 @@ async function getAnimalData(routes) {
     testfunction(routes, movebank);
 };
 
-async function testfunction(routes, animaldata) {
+function testfunction(routes, animaldata) {
     initInterface(routes);
     var routes_linestrings = routesToLineStrings(routes);
     var routes_layers = geoJSONsToLayers(routes_linestrings);
     activateInterface(routes_layers, prepareAnimalData(animaldata));
 };
 
-async function initInterface(routes) {
+function initInterface(routes) {
     var sidebar = document.getElementById("sidebar");
     var interface = document.getElementById("interface");
 
@@ -88,6 +88,7 @@ function activateInterface(routeLayer, animaldata) {
                 zoomButtons[layerIndex].setAttribute("style", "pointer-events: none; color: grey");
                 this.className = "hidden";
                 featureGroup_marker.clearLayers();
+                featureGroup_animals.clearLayers();
             };
         });
     });
@@ -105,10 +106,10 @@ function activateInterface(routeLayer, animaldata) {
         });
 
         featureGroup_marker.clearLayers();
+        featureGroup_animals.clearLayers();
 
         e.layer.setStyle(clickedStyle);
 
-        console.log(e.layer);
 
         var marker = L.circleMarker(e.layer._latlngs[0], { color: e.layer.options.color, radius: 15 });
         featureGroup_marker.addLayer(marker);
@@ -119,7 +120,9 @@ function activateInterface(routeLayer, animaldata) {
             marker.setLatLng(e.layer._latlngs[slider.value]);
         });
 
-        /* var intersects = await lineStringsIntersect(animaldata, e.layer.feature.geometry);
+        console.log(e.layer);
+
+        var intersects = turf.lineIntersect(animaldata, e.layer.feature.geometry);
 
         intersects.features.forEach((point) => {
             var latlng = switchCoordinates(point.geometry.coordinates);
@@ -129,8 +132,8 @@ function activateInterface(routeLayer, animaldata) {
                 iconSize: [40, 50],
             });
 
-            featureGroup_animals.addLayer(L.marker(latlng));
-        }); */
+            featureGroup_animals.addLayer(L.marker(latlng, { icon: gooseIcon }));
+        });
     });
 };
 function routesToLineStrings(routes) {
@@ -177,41 +180,6 @@ function switchCoordinates(coordinates) {
     result.push(lat);
     result.push(lng);
     return result;
-};
-
-async function lineStringsIntersect(l1, l2) {
-    var intersects = [];
-    for (var i = 0; i <= l1.coordinates.length - 2; ++i) {
-        for (var j = 0; j <= l2.coordinates.length - 2; ++j) {
-            var a1Latlon = L.latLng(l1.coordinates[i][1], l1.coordinates[i][0]),
-                a2Latlon = L.latLng(l1.coordinates[i + 1][1], l1.coordinates[i + 1][0]),
-                b1Latlon = L.latLng(l2.coordinates[j][1], l2.coordinates[j][0]),
-                b2Latlon = L.latLng(l2.coordinates[j + 1][1], l2.coordinates[j + 1][0]),
-                a1 = L.Projection.SphericalMercator.project(a1Latlon),
-                a2 = L.Projection.SphericalMercator.project(a2Latlon),
-                b1 = L.Projection.SphericalMercator.project(b1Latlon),
-                b2 = L.Projection.SphericalMercator.project(b2Latlon),
-                ua_t = (b2.x - b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x),
-                ub_t = (a2.x - a1.x) * (a1.y - b1.y) - (a2.y - a1.y) * (a1.x - b1.x),
-                u_b = (b2.y - b1.y) * (a2.x - a1.x) - (b2.x - b1.x) * (a2.y - a1.y);
-            if (u_b != 0) {
-                var ua = ua_t / u_b,
-                    ub = ub_t / u_b;
-                if (0 <= ua && ua <= 1 && 0 <= ub && ub <= 1) {
-                    var pt_x = a1.x + ua * (a2.x - a1.x),
-                        pt_y = a1.y + ua * (a2.y - a1.y),
-                        pt_xy = { "x": pt_x, "y": pt_y },
-                        pt_latlon = L.Projection.SphericalMercator.unproject(pt_xy);
-                    intersects.push({
-                        'type': 'Point',
-                        'coordinates': [pt_latlon.lng, pt_latlon.lat]
-                    });
-                }
-            }
-        }
-    }
-    if (intersects.length == 0) intersects = false;
-    return intersects;
 };
 
 /* async function getWeatherData(routes, animaldata) {

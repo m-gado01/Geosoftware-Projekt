@@ -152,6 +152,17 @@ td, th, tr {
   cursor: pointer;
 }
 
+#infobox {
+  width: 20%;
+  height: 40%;
+  position: fixed;
+  top: 20%;
+  right: 5%;
+  z-index: 1000;
+  background-color: #2B292E;
+  opacity: 0.7;
+}
+
 #interface {
   width: 50vw;
   margin: auto;
