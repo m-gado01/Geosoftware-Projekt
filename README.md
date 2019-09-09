@@ -4,7 +4,14 @@ This is our final project for the course 'Geosoftware I'. We developed an intera
 
 ## Installation & Setup
 
-To install the app just download the complete repository. To start the app you will need to have atleast Docker 19.03.2 installed. Run 
+To install the app just download the complete repository. 
+
+Next you need to enter a valid Mapbox API token and a Airvisual API token in order to allow the app to make calls to APIs into the following file:
+```
+../Geosoftware-Projekt-master/data/tokens.js
+```
+
+To start the app you will need to have atleast Docker 19.03.2 installed. Run 
 ```
 docker-compose up
 ```
