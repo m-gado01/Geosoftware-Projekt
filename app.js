@@ -45,7 +45,7 @@ async function connectDatabase() {
         console.log("MongoDB connection error!", error);
     });
 
-    mongoose.connect('mongodb://localhost:27017/routedb', { useNewUrlParser: true })
+    mongoose.connect('mongodb://mongo:27017/routedb', { useNewUrlParser: true })
         .catch(error => console.log(error));
 };
 
