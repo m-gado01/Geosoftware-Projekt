@@ -1,36 +1,17 @@
-# Project Title
+# Geosoftware I - Final Project
 
-One Paragraph of project description goes here
+This is our final project for the course 'Geosoftware I'. We developed an interactive web application for displaying user routes and encounters with animals. 
 
-## Getting Started
+## Installation & Setup
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
+To install the app just download the complete repository. To start the app you will need to have atleast Docker 19.03.2 installed. Run 
 ```
-Give examples
+docker-compose up
 ```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
+to start the app. Afterwards open you browser and navigate to
 ```
-Give the example
+localhost:3000
 ```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
