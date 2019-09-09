@@ -66,6 +66,7 @@ td, th, tr {
   height: 82%;
   position: fixed;
   top: 9%;
+  overflow: auto;
 }
 
 #footer {
@@ -161,6 +162,7 @@ td, th, tr {
   z-index: 1000;
   background-color: #2B292E;
   opacity: 0.7;
+  color: white;
 }
 
 #interface {
@@ -179,17 +181,43 @@ td, th, tr {
   text-align: left;
 }
 
-/* #imprint {
+#imprint {
   background-color: #2B292E;
   padding: 40px;
   color: rgb(194, 189, 189);
   overflow: auto;
 }
 
-#index1 {
-  background-color: #2B292E;
+#home {
   height: 400px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-} */
+  float: inline-end;
+  position: fixed;
+  align-items: right;
+  justify-content: right;
+} 
+
+.img {
+  position: fixed;
+
+}
+
+p {
+  font-size: 2vh;
+  position: absolute;
+  right: 1%;
+}
+
+a {
+  color: white;;
+  text-decoration-line: none;
+  padding: 2%;
+}
+
+a:hover {
+  text-decoration-line: underline;
+}
+
+text {
+  color: white;
+}

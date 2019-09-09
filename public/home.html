@@ -3,10 +3,10 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="author" content="Max Gadomski">
+  <meta name="author" content="Christin Bösch">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HOME</title>
-  <link rel="stylesheet" href='bootstrap/css/bootstrap.css'>
+  <link rel="stylesheet" href='bootstrap/css/bootstrap.min.css'>
   <link rel="stylesheet" href='stylesheets/style.css'>
 </head>
 
@@ -17,32 +17,29 @@
     <hr>
   </div>
   <div id="main">
+    <!-- bootstrap class for heading -->
     <div class="jumbotron text-center">
       <h1>HOME</h1>
       <h3>Welcome to our Webpage!</h3>
     </div>
+    <!-- bootstrap container with columns (grid) -->
     <div class="container-fluid">
-      <div class="col-lg-8" id="home">
+      <div class="col-lg-11" id="home">
         <text>
           Discover our Planet!<br><br>
-          I have created two types of maps<br><br>
-          In the Map it is possible to calculate given routes to show the weather of the routes and to display these
-          routes individually or together on the map<br><br>
-          In the Geojson-Map it is possible to add your own geojson object to the map or to create a new one by drawing
-          into the map.<br><br>
-          Everything is possible! Just visit the category "Map" and "Geojson-Map" which can be found in the navbar at
-          the
+          We have created a beautiful map!<br><br>
+          In the map developed by us it is possible to upload and save your running routes.
+          The app shows after uploading the most diverse possible encounters on the respective route<br><br>
+          Everything is possible! Just visit the category "Application" which can be found in the navbar at the
           top of the website.
         </text>
+        <img src="images/earth.png" alt="Selfhtml" style="width: 400px; height: 400px;">
       </div>
-      <div class="col-lg-4" id="index1">
-        <img src="images/earth.png" alt="Selfhtml" style="width: 300px; height: 300px;">
-      </div>
-    </div> -->
-    <div id="footer">
-      <hr>
-      <a class="footerlinks" href='imprint'>Imprint</a>
     </div>
+  </div>
+  <div id="footer">
+    <hr>
+    <a class="footerlinks" href='imprint'>Imprint</a>
   </div>
   <script src="jquery/jquery.min.js"></script>
   <script src="bootstrap/js/bootstrap.min.js"></script>
