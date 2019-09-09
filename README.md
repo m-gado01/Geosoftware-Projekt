@@ -25,8 +25,13 @@ If you move your mouse pointer back to the map you can directly click on each la
 
 To start the tests simply run
 ```
+npm i
+```
+and
+```
 npm test
 ```
+
 in your Terminal/Command Prompt.
 
 ## Built With
